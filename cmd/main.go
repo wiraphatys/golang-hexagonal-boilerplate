@@ -2,6 +2,8 @@ package main
 
 import (
 	. "basedir/internal/adapter/primary/http"
+	. "basedir/internal/adapter/primary/http/order"
+	. "basedir/internal/adapter/primary/http/product"
 	. "basedir/internal/adapter/secondary/infrastructure/config"
 	. "basedir/internal/adapter/secondary/infrastructure/database"
 	. "basedir/internal/adapter/secondary/infrastructure/logger"

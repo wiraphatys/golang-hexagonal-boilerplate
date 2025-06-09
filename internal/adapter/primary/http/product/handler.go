@@ -1,4 +1,4 @@
-package http
+package product
 
 import (
 	core "basedir/internal/core/domain/product"

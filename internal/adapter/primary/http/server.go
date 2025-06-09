@@ -9,7 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	core "basedir/internal/core/shared/config"
+	"basedir/internal/adapter/primary/http/order"
+	"basedir/internal/adapter/primary/http/product"
+	core "basedir/internal/core/infra/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -28,11 +30,11 @@ type HttpServer struct {
 }
 
 type RouteGroup struct {
-	order   *OrderHttpHandler
-	product *ProductHttpHandler
+	order   *order.OrderHttpHandler
+	product *product.ProductHttpHandler
 }
 
-func NewRouteGroup(order *OrderHttpHandler, product *ProductHttpHandler) *RouteGroup {
+func NewRouteGroup(order *order.OrderHttpHandler, product *product.ProductHttpHandler) *RouteGroup {
 	return &RouteGroup{
 		order:   order,
 		product: product,
