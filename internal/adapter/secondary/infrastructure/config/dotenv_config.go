@@ -1,12 +1,11 @@
 package config
 
 import (
+	"basedir/internal/core/infra/config"
 	"fmt"
 	"log"
 	"os"
 	"sync"
-
-	"basedir/internal/core/shared/config"
 
 	"github.com/joho/godotenv"
 )
