@@ -17,12 +17,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type HttpServer struct {
 	cfg           core.AppConfigProvider
-	db            *gorm.DB
 	log           *zap.Logger
 	fiberApp      *fiber.App
 	apiBaseRouter fiber.Router
@@ -41,8 +39,8 @@ func NewRouteGroup(order *OrderHttpHandler, product *ProductHttpHandler) *RouteG
 	}
 }
 
-func NewHttpServer(cfg core.AppConfigProvider, db *gorm.DB, zapLogger *zap.Logger, baseApiPrefix string) *HttpServer {
-	validateArguments(cfg, db, zapLogger, &baseApiPrefix)
+func NewHttpServer(cfg core.AppConfigProvider, zapLogger *zap.Logger, baseApiPrefix string) *HttpServer {
+	validateArguments(cfg, zapLogger, &baseApiPrefix)
 
 	app := fiber.New(fiber.Config{
 		AppName: cfg.GetServerName(),
@@ -77,7 +75,6 @@ func NewHttpServer(cfg core.AppConfigProvider, db *gorm.DB, zapLogger *zap.Logge
 
 	return &HttpServer{
 		cfg:           cfg,
-		db:            db,
 		log:           zapLogger,
 		fiberApp:      app,
 		apiBaseRouter: apiGroup,
@@ -171,12 +168,9 @@ func (s *HttpServer) addHttpRoute(method, relativePath string, handler fiber.Han
 	return s.apiBaseRouter.Add(method, relativePath, handler)
 }
 
-func validateArguments(cfg core.AppConfigProvider, db *gorm.DB, zapLogger *zap.Logger, baseApiPrefix *string) {
+func validateArguments(cfg core.AppConfigProvider, zapLogger *zap.Logger, baseApiPrefix *string) {
 	if cfg == nil {
 		zapLogger.Fatal("Server configuration is missing for HTTP server initialization")
-	}
-	if db == nil {
-		zapLogger.Fatal("Database instance is missing for HTTP server initialization")
 	}
 	if zapLogger == nil {
 		zapLogger.Fatal("Logger instance is missing for HTTP server initialization")

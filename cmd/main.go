@@ -38,7 +38,7 @@ func main() {
 
 	routeGroup := NewRouteGroup(orderHttp, productHttp)
 
-	httpServer := NewHttpServer(cfg, db, log, baseApiPrefix)
+	httpServer := NewHttpServer(cfg, log, baseApiPrefix)
 	httpServer.SetupRoute(routeGroup)
 	httpServer.Start()
 }
